@@ -14,6 +14,7 @@ import umbcLogo from './umbc.png';
 
 export default function App() {
   const [posts, setPosts]               = useState([]);
+  const [searchTerm, setSearchTerm]     = useState('');
   const [showForm, setShowForm]         = useState(false);
   const [courseNumber, setCourseNumber] = useState('');
   const [courseName, setCourseName]     = useState('');
@@ -35,6 +36,15 @@ export default function App() {
       }
     })();
   }, []);
+  // filter posts by courseNumber OR courseName starting with searchTerm
+const filteredPosts = posts.filter(post => {
+  const term = searchTerm.trim().toLowerCase();
+  if (!term) return true;
+  const num  = (post.courseNumber ?? '').toString().toLowerCase();
+  const name = (post.courseName   ?? '').toLowerCase();
+  return num.startsWith(term) || name.startsWith(term);
+});
+
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -89,6 +99,23 @@ export default function App() {
       <button className="floating-add-btn" onClick={() => setShowForm(true)}>
         Create Session
       </button>
+
+            {/* ─── Search Bar ─────────────────────────────── */}
+      <input
+        type="text"
+        placeholder="Search for course"
+        value={searchTerm}
+        onChange={e => setSearchTerm(e.target.value)}
+        style={{
+          display: 'block',
+          margin: '1rem 0',
+          padding: '0.5rem 1rem',
+          width: '100%',
+          maxWidth: '400px',
+          fontSize: '1rem'
+        }}
+      />
+
 
       {showForm && (
         <form className="new-post-form" onSubmit={handleSubmit}>
@@ -161,6 +188,32 @@ export default function App() {
         ))
       ) : (
         <p>No study sessions posted yet.</p>
+      )}
+            {filteredPosts.length > 0 ? (
+        filteredPosts.map(post => (
+          <PostCard
+            key={post.id}
+            courseNumber={post.courseNumber}
+            courseName={post.courseName}
+            professor={post.professor}
+            location={post.location}
+            room={post.room}
+            date={post.date}
+            time={post.time}
+            participants={post.participants}
+            currentUid={currentUid}
+            isHost={post.creatorId === currentUid}
+            isParticipant={post.participants?.includes(currentUid)}
+            onDelete={() =>
+              deletePost(post.id).then(() =>
+                setPosts(curr => curr.filter(x => x.id !== post.id))
+              )
+            }
+            onJoin={() => handleToggleJoin(post.id)}
+          />
+        ))
+      ) : (
+        <p>No sessions match “{searchTerm}”.</p>
       )}
     </div>
   );
