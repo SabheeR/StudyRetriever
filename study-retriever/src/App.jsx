@@ -10,6 +10,7 @@ import {
 import { auth } from './firebase/firebaseConfig';
 import PostCard from './PostCard';
 import './App.css';
+import umbcLogo from './umbc.png';
 
 export default function App() {
   const [posts, setPosts]               = useState([]);
@@ -81,7 +82,10 @@ export default function App() {
 
   return (
     <div style={{ padding: 24 }}>
-      <h1>📚 Study Retriever</h1>
+      <header className="app-header">
+        <img src={umbcLogo} alt="UMBC Logo" className="umbc-logo" />
+        <h1>Study Retriever</h1>
+      </header>
       <button className="floating-add-btn" onClick={() => setShowForm(true)}>
         Create Session
       </button>

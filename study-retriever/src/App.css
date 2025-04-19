@@ -162,3 +162,19 @@
     justify-content: center;
   }
 }
+
+.app-header {
+  display: flex;
+  align-items: center;    /* vertically center logo + text */
+  gap: 0.5rem;            /* space between logo and text */
+}
+
+.umbc-logo{
+  width: 4rem;
+  height: auto;    /* preserve aspect ratio */
+  
+  /* Optional: limit its maximum size */
+  max-width: 100%;
+  max-height: 4rem;
+  margin-right: 0.5rem;
+}
