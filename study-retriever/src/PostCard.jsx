@@ -20,10 +20,10 @@ const PostCard = ({
       </div>
 
       <p className="professor-name">Prof. {professor}</p>
-      <p className="location">{location}, Room {room}</p>
+      <p className="location">{location} Room {room}</p>
 
       <div className="card-footer">
-        <span className="time">{date} — {time}</span>
+        <span className="time">{date} | {time}</span>
         {isHost ? (
           <button className="delete-btn" onClick={onDelete}>🗑 Delete</button>
         ) : (

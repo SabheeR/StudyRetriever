@@ -1,90 +1,91 @@
 .card {
-    background-color: white;
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    margin-bottom: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-  }
-  
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  
-  .course-badge {
-    background-color: #e0e7ff;
-    color: #3730a3;
-    font-weight: 600;
-    padding: 0.25rem 0.75rem;
-    border-radius: 8px;
-    font-size: 0.9rem;
-  }
-  
-  .course-name {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #1f2937;
-    margin: 0;
-  }
-  
-  .professor-name {
-    color: #6b7280;
-    font-style: italic;
-    font-size: 0.95rem;
-    margin-top: -0.3rem;
-    margin-bottom: 0.1rem;
-  }
-  
-  .location {
-    font-size: 0.95rem;
-    color: #374151;
-    margin-top: 0.3rem;
-    margin-bottom: 0.2rem;
-  }
-  
-  .card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1rem;
-  }
-  
-  .time {
-    color: #4b5563;
-    font-size: 0.9rem;
-  }
-  
-  .join-btn {
-    background-color: #2563eb;
-    color: white;
-    padding: 0.5rem 1.25rem;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  .join-btn:hover {
-    background-color: #1e40af;
-  }
-  
-  .delete-btn {
-    background-color: #ef4444;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  .delete-btn:hover {
-    background-color: #dc2626;
-  }
-  
+  background-color: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1.5rem;
+
+  /* force left‐alignment */
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 0.5rem;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.course-badge {
+  background-color: #e0e7ff;
+  color: #3730a3;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 8px;
+  font-size: 1rem;  /* ↑ bigger */
+}
+
+.course-name {
+  font-size: 1.5rem; /* ↑ bigger */
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.professor-name {
+  font-size: 1.1rem; /* ↑ bigger */
+  color: #6b7280;
+  font-style: italic;
+  margin: 0;          /* reset negative margins */
+}
+
+.location {
+  font-size: 1.1rem; /* ↑ bigger */
+  color: #374151;
+  margin: 0;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+
+  /* keep everything flush left (except the buttons) */
+}
+
+.time {
+  font-size: 1rem;  /* ↑ bigger */
+  color: #4b5563;
+}
+
+.join-btn,
+.delete-btn {
+  font-size: 1rem;    /* ↑ bigger */
+  font-weight: 500;
+  padding: 0.5rem 1.25rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.join-btn {
+  background-color: #2563eb;
+  color: white;
+}
+.join-btn:hover {
+  background-color: #1e40af;
+}
+
+.delete-btn {
+  background-color: #ef4444;
+  color: white;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+.delete-btn:hover {
+  background-color: #dc2626;
+}

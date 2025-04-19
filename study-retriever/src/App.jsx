@@ -55,7 +55,7 @@ export default function App() {
     <div style={{ padding: 24 }}>
       <h1>📚 Study Retriever</h1>
       <button className="floating-add-btn" onClick={() => setShowForm(true)}>
-        +
+        Create Post
       </button>
 
       {showForm && (
