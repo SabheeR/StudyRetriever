@@ -100,7 +100,7 @@ const filteredPosts = posts.filter(post => {
         Create Session
       </button>
 
-            {/* ─── Search Bar ─────────────────────────────── */}
+            {}
       <input
         type="text"
         placeholder="Search for course"
