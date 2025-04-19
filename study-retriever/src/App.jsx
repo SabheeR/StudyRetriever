@@ -100,6 +100,14 @@ const filteredPosts = posts.filter(post => {
         Create Session
       </button>
 
+{/* ─── Refresh Button ─────────────────────────── */}
+<button
+  className="refresh-btn"
+  onClick={() => window.location.reload()}
+>
+  Refresh
+</button>
+
             {}
       <input
         type="text"
