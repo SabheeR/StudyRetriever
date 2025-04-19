@@ -1,20 +1,26 @@
 // src/App.jsx
 import { useEffect, useState } from 'react';
-import { fetchPosts, createPost, deletePost } from './firebase/postService';
+import {
+  fetchPosts,
+  createPost,
+  deletePost,
+  joinSession,
+  leaveSession
+} from './firebase/postService';
 import { auth } from './firebase/firebaseConfig';
 import PostCard from './PostCard';
 import './App.css';
 
 export default function App() {
-  const [posts, setPosts]                   = useState([]);
-  const [showForm, setShowForm]             = useState(false);
-  const [courseNumber, setCourseNumber]     = useState('');
-  const [courseName, setCourseName]         = useState('');
-  const [professor, setProfessor]           = useState('');
-  const [location, setLocation]             = useState('');
-  const [room, setRoom]                     = useState('');
-  const [date, setDate]                     = useState('');
-  const [time, setTime]                     = useState('');
+  const [posts, setPosts]               = useState([]);
+  const [showForm, setShowForm]         = useState(false);
+  const [courseNumber, setCourseNumber] = useState('');
+  const [courseName, setCourseName]     = useState('');
+  const [professor, setProfessor]       = useState('');
+  const [location, setLocation]         = useState('');
+  const [room, setRoom]                 = useState('');
+  const [date, setDate]                 = useState('');
+  const [time, setTime]                 = useState('');
 
   const currentUid = auth.currentUser?.uid;
 
@@ -37,7 +43,7 @@ export default function App() {
       { courseNumber, courseName, professor, location, room, date, time },
       currentUid
     );
-
+    setPosts(await fetchPosts());
     setCourseNumber('');
     setCourseName('');
     setProfessor('');
@@ -46,16 +52,38 @@ export default function App() {
     setDate('');
     setTime('');
     setShowForm(false);
+  };
 
-    const updated = await fetchPosts();
-    setPosts(updated);
+  const handleToggleJoin = async postId => {
+    const post = posts.find(p => p.id === postId);
+    const isJoined = post.participants?.includes(currentUid);
+
+    if (isJoined) {
+      await leaveSession(postId, currentUid);
+      setPosts(ps =>
+        ps.map(p =>
+          p.id === postId
+            ? { ...p, participants: p.participants.filter(uid => uid !== currentUid) }
+            : p
+        )
+      );
+    } else {
+      await joinSession(postId, currentUid);
+      setPosts(ps =>
+        ps.map(p =>
+          p.id === postId
+            ? { ...p, participants: [...(p.participants || []), currentUid] }
+            : p
+        )
+      );
+    }
   };
 
   return (
     <div style={{ padding: 24 }}>
       <h1>📚 Study Retriever</h1>
       <button className="floating-add-btn" onClick={() => setShowForm(true)}>
-        Create Post
+        Create Session
       </button>
 
       {showForm && (
@@ -115,15 +143,16 @@ export default function App() {
             room={post.room}
             date={post.date}
             time={post.time}
+            participants={post.participants}
+            currentUid={currentUid}
             isHost={post.creatorId === currentUid}
+            isParticipant={post.participants?.includes(currentUid)}
             onDelete={() =>
               deletePost(post.id).then(() =>
                 setPosts(curr => curr.filter(x => x.id !== post.id))
               )
             }
-            onJoin={() => {
-              /* join logic */
-            }}
+            onJoin={() => handleToggleJoin(post.id)}
           />
         ))
       ) : (

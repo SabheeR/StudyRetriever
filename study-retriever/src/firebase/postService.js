@@ -49,3 +49,15 @@ export async function deletePost(postId) {
   const ref = doc(db, 'studyPosts', postId);
   await deleteDoc(ref);
 }
+export async function joinSession(postId, userId) {
+  const ref = doc(db, 'studyPosts', postId);
+  await updateDoc(ref, {
+    participants: arrayUnion(userId)
+  });
+}
+export async function leaveSession(postId, userId) {
+  const ref = doc(db, 'studyPosts', postId);
+  await updateDoc(ref, {
+    participants: arrayRemove(userId)
+  });
+}

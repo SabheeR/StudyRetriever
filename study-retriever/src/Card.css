@@ -79,6 +79,10 @@
 .join-btn:hover {
   background-color: #1e40af;
 }
+.joined-btn {
+  background-color: #17a34b;
+  color: white;
+}
 
 .delete-btn {
   background-color: #ef4444;
