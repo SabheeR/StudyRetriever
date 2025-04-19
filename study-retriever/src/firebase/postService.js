@@ -1,10 +1,10 @@
+// src/firebase/postsService.js
 import { db } from './firebaseConfig';
-import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 
-const postsRef = collection(db, 'studyPosts');
-
-export const fetchPosts = async () => {
-  const q = query(postsRef, orderBy('createdAt', 'desc'));
-  const snapshot = await getDocs(q);
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-};
+export async function fetchPosts() {
+  const snap = await getDocs(collection(db, 'studyPosts'));
+  // debug: log each doc
+  snap.docs.forEach(d => console.log(d.id, '=>', d.data()));
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}

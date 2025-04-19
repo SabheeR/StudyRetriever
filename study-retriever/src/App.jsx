@@ -1,37 +1,31 @@
+// src/App.jsx
 import { useEffect, useState } from 'react';
-import { fetchPosts } from '/Users/sabheerehman/Documents/GitHub/StudyRetriever/study-retriever/src/firebase/postService.js';
+import { fetchPosts } from './firebase/postService';
 import PostCard from './PostCard';
 import './App.css';
 
-function App() {
+export default function App() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    const loadPosts = async () => {
+    (async () => {
       try {
         const data = await fetchPosts();
-        console.log("Fetched posts from Firestore:", data); // 👀
+        console.log('✅ fetched:', data);
         setPosts(data);
-      } catch (error) {
-        console.error("Error loading posts:", error);
+      } catch (err) {
+        console.error('❌ fetch error:', err);
       }
-    };
-  
-    loadPosts();
-  }, []);  
+    })();
+  }, []);
 
   return (
-    <div style={{ padding: '24px' }}>
+    <div style={{ padding: 24 }}>
       <h1>📚 Study Retriever</h1>
-      {posts.length > 0 ? (
-        posts.map((post) => (
-          <PostCard key={post.id} {...post} />
-        ))
-      ) : (
-        <p>No study sessions posted yet.</p>
-      )}
+      {posts.length
+        ? posts.map(p => <PostCard key={p.id} {...p} />)
+        : <p>No study sessions posted yet.</p>
+      }
     </div>
   );
 }
-
-export default App;
