@@ -221,7 +221,7 @@ const filteredPosts = posts.filter(post => {
           />
         ))
       ) : (
-        <p>No sessions match “{searchTerm}”.</p>
+        <p></p>
       )}
     </div>
   );
